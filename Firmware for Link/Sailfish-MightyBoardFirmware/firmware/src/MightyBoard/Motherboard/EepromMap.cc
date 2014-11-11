@@ -476,7 +476,7 @@ enum BOTSTEP_TYPE {
 void fullResetEEPROM() {
 	
 	// axis inversion settings
-	uint8_t axis_invert = 0b10100; // invert XYBZ
+	uint8_t axis_invert = 0b10110; // invert XYBZ
 	eeprom_write_byte((uint8_t*)eeprom_offsets::AXIS_INVERSION, axis_invert);
 	
 	// tool count settings
