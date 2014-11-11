@@ -381,7 +381,7 @@ public:
 	bool buttonsDisabled;
 };
 
-/*
+
 class JogModeScreen: public Screen {
 
 private:
@@ -391,10 +391,13 @@ private:
 		DISTANCE_CONT,
 	};
 	enum jogmode_t {
-		JOG_MODE_X,
-		JOG_MODE_Y,
-		JOG_MODE_Z,
 		JOG_MODE_BACK,
+		JOG_MODE_X_U,
+		JOG_MODE_X_D,
+		JOG_MODE_Y_U,
+		JOG_MODE_Y_D,
+		JOG_MODE_Z_U,
+		JOG_MODE_Z_D,
 	};
 
 	distance_t jogDistance;
@@ -414,7 +417,7 @@ public:
 
 	void notifyButtonPressed(ButtonArray::ButtonName button);
 };
-*/
+
 class FilamentOdometerScreen: public Screen {
 
 private:

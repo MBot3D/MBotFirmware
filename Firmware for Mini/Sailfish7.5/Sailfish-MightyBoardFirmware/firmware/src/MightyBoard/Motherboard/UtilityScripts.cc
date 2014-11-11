@@ -23,7 +23,7 @@
 #include "EepromMap.hh"
 #include "Menu_locales.hh"
 
-const static uint16_t Lengths[3]  PROGMEM = { 98, /// Home Axes
+const static uint16_t Lengths[3]  PROGMEM = { 153, /// Home Axes
 					      LEVEL_PLATE_LEN,
 #if defined(SINGLE_EXTRUDER) || !defined(NOZZLE_CALIBRATION_SCRIPT)
 					      0};

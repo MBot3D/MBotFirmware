@@ -94,11 +94,8 @@ namespace replicator_axis_max_feedrates{
 }
 
 namespace replicator_axis_steps_per_mm{
-#ifdef MODEL_REPLICATOR2
+
 	const static uint32_t axis_steps_per_mm[5] = { 88573186, 88573186, 400000000, 96275202, 96275202};
-#else
-	const static uint32_t axis_steps_per_mm[5] = { 94139704, 94139704, 400000000, 96275202, 96275202};
-#endif
 
 	/// Footnote:
 	/// Steps per mm for all axis, all values multiplied by 1,000,000

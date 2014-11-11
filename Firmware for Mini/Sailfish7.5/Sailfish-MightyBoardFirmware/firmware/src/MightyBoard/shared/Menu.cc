@@ -70,7 +70,7 @@ FilamentMenu                  filamentMenu;
 FilamentScreen                filamentScreen;
 //HeaterPreheatMenu             heaterPreheatMenu;
 HomeOffsetsModeScreen         homeOffsetsModeScreen;
-//JogModeScreen                 jogModeScreen;
+JogModeScreen                 jogModeScreen;
 MonitorModeScreen             monitorModeScreen;
 //PauseAtZPosScreen             pauseAtZPosScreen;
 //PreheatSettingsMenu           preheatSettingsMenu;
@@ -193,9 +193,10 @@ static void progressBar(LiquidCrystalSerial& lcd, int16_t delta, int16_t setTemp
 	}
 }
 
-#ifdef BUILD_STATS
+//#ifdef BUILD_STATS
 
 //  Assumes room for up to 7 + NUL
+//  999h59m
 static void formatTime(char *buf, uint32_t val)
 {
 	bool hasdigit = false;
@@ -261,7 +262,7 @@ static void digits3(char *buf, uint8_t val)
 	buf[3] = '\0';
 }
 
-#endif
+//#endif
 
 void SplashScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) 
 {
@@ -1070,125 +1071,185 @@ void MessageScreen::notifyButtonPressed(ButtonArray::ButtonName button) {
                 break;
 	}
 }
-/*
+
 void JogModeScreen::reset() {
 	jogDistance = DISTANCE_CONT;
 	jogging = false;
 	distanceChanged = modeChanged = false;
-	JogModeScreen = JOG_MODE_X;
+	JogModeScreen = JOG_MODE_BACK;
 	for (uint8_t i = 0; i < 3; i++) {
 	    digiPotOnEntry[i] = steppers::getAxisPotValue(i);
 	    steppers::resetAxisPot(i);
 	}
+	Language = eeprom::isLanguageCH();
 }
 
 
 void JogModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 	//Stop all movement when a button is released
-	if ((jogging) && (!interface::isButtonPressed(ButtonArray::DOWN)) &&
-	    (!interface::isButtonPressed(ButtonArray::UP)))
+	if ((jogging) && (!interface::isButtonPressed(ButtonArray::CENTER)))
 	{
 		jogging = false;
 		steppers::abort();
 	}
-	
-	uint8_t dummy;
-	Point position = steppers::getStepperPosition(&dummy);
-	
+
 	if(forceRedraw)
 	{
-		lcd.clearHomeCursor();
-		lcd.writeFromPgmspace(JOG1_MSG);
-		lcd.moveWriteFromPgmspace(0, 3, JOG2_MSG);
-		lcd.moveWriteFromPgmspace(1, 7, JOG3_MSG);
+		if(Language == CH)
+		{
+			lcd.clearHomeCursor();
+			lcd.setCursor(0,0);
+				lcd.write(0x04);
+				lcd.writeFromPgmspaceCH_R(JOG_MSG_CH);
+				for(int i=0; i<7; i++)
+					lcd.write(0x04);
+			lcd.setCursor(0,1);
+			lcd.writeFromPgmspaceCH(BACK_TO_MONITOR_MSG_CH);
+		}
+		else if (Language == EN)
+		{
+			lcd.clearHomeCursor();
+			lcd.setCursor(0,0);
+				lcd.write(0x04);
+				lcd.writeFromPgmspace_R(JOG_MSG);
+				for(int i=0; i<7; i++)
+					lcd.write(0x04);
+			lcd.setCursor(0,1);
+			lcd.writeFromPgmspace(BACK_TO_MONITOR_MSG);		
+		}
 		
-		lcd.setCursor(1, 5);
-		lcd.writeInt32(position[0] ,3);
-
-		lcd.setCursor(6, 5);
-		lcd.writeInt32(position[1] ,3);
-
-		lcd.setCursor(11, 5);
-		lcd.writeInt32(position[2] ,3);
+		lcd.setCursor(2,2);
+		lcd.write('X');
+		lcd.write(0x5e);
+		lcd.setCursor(2,4);
+		lcd.write('X');
+		lcd.write(0x00);
+		lcd.setCursor(7,2);
+		lcd.write('Y');
+		lcd.write(0x5e);
+		lcd.setCursor(7,4);
+		lcd.write('Y');
+		lcd.write(0x00);
+		lcd.setCursor(12,2);
+		lcd.write('Z');
+		lcd.write(0x5e);
+		lcd.setCursor(12,4);
+		lcd.write('Z');
+		lcd.write(0x00);
 	}
 	
 	if (forceRedraw || modeChanged) {
 
-			BOARD_STATUS_SET(Motherboard::STATUS_MANUAL_MODE);
+		BOARD_STATUS_SET(Motherboard::STATUS_MANUAL_MODE);
 
-			modeChanged = false;
+		modeChanged = false;
 
-			switch (JogModeScreen){
+		switch (JogModeScreen){
 			default:
 				return;
-			case JOG_MODE_X:
-				lcd.setCursor(0, 7);
-				lcd.write(' ');
-				lcd.setCursor(5, 7);
-				lcd.writeString((char*)"           ");				
-				lcd.setCursor(2, 2);
-				lcd.write(0x5e);
-				lcd.setCursor(2, 4);
-				lcd.write(0x00);
-				break;
-			case JOG_MODE_Y:
-				lcd.setCursor(2, 2);
-				lcd.write(' ');
-				lcd.setCursor(2, 4);
-				lcd.write(' ');
-				lcd.setCursor(7, 2);
-				lcd.write(0x5e);
-				lcd.setCursor(7, 4);
-				lcd.write(0x00);
-				break;
-			case JOG_MODE_Z:
-				lcd.setCursor(7, 2);
-				lcd.write(' ');
-				lcd.setCursor(7, 4);
-				lcd.write(' ');
-				lcd.setCursor(12, 2);
-				lcd.write(0x5e);
-				lcd.setCursor(12, 4);
-				lcd.write(0x00);
-				break;
 			case JOG_MODE_BACK:
-				lcd.setCursor(12, 2);
-				lcd.write(' ');
-				lcd.setCursor(12, 4);
-				lcd.write(' ');
-				lcd.setCursor(0, 7);
-				lcd.write(0x01);
-				lcd.moveWriteFromPgmspace(5, 7, JOG4_MSG);
-				lcd.setCursor(7, 7);
+				lcd.setCursor(12,4);
+				lcd.write('Z');
 				lcd.write(0x00);
+				lcd.setCursor(2,2);
+				lcd.write('X');
+				lcd.write(0x5e);
+				if(Language == CH)
+				{
+					lcd.setCursor(0,1);
+					lcd.writeFromPgmspaceCH_R(BACK_TO_MONITOR_MSG_CH);
+				}
+				else if (Language == EN)
+				{
+					lcd.setCursor(0,1);
+					lcd.writeFromPgmspace_R(BACK_TO_MONITOR_MSG);		
+				}
 				break;
-			}
-
+			case JOG_MODE_X_U:
+				if(Language == CH)
+				{
+					lcd.setCursor(0,1);
+					lcd.writeFromPgmspaceCH(BACK_TO_MONITOR_MSG_CH);
+				}
+				else if (Language == EN)
+				{
+					lcd.setCursor(0,1);
+					lcd.writeFromPgmspace(BACK_TO_MONITOR_MSG);		
+				}
+				lcd.setCursor(2,4);
+				lcd.write('X');
+				lcd.write(0x00);
+				lcd.setCursor(2,2);
+				lcd.writeInversion('X');
+				lcd.writeInversion(0x5e);
+				break;
+			case JOG_MODE_X_D:
+				lcd.setCursor(2,2);
+				lcd.write('X');
+				lcd.write(0x5e);
+				lcd.setCursor(7,2);
+				lcd.write('Y');
+				lcd.write(0x5e);
+				lcd.setCursor(2,4);
+				lcd.writeInversion('X');
+				lcd.writeInversion(0x00);
+				break;
+			case JOG_MODE_Y_U:
+				lcd.setCursor(2,4);
+				lcd.write('X');
+				lcd.write(0x00);
+				lcd.setCursor(7,4);
+				lcd.write('Y');
+				lcd.write(0x00);
+				lcd.setCursor(7,2);
+				lcd.writeInversion('Y');
+				lcd.writeInversion(0x5e);
+				break;
+			case JOG_MODE_Y_D:
+				lcd.setCursor(7,2);
+				lcd.write('Y');
+				lcd.write(0x5e);
+				lcd.setCursor(12,2);
+				lcd.write('Z');
+				lcd.write(0x5e);
+				lcd.setCursor(7,4);
+				lcd.writeInversion('Y');
+				lcd.writeInversion(0x00);
+				break;	
+			case JOG_MODE_Z_U:
+				lcd.setCursor(7,4);
+				lcd.write('Y');
+				lcd.write(0x00);
+				lcd.setCursor(12,4);
+				lcd.write('Z');
+				lcd.write(0x00);
+				lcd.setCursor(12,2);
+				lcd.writeInversion('Z');
+				lcd.writeInversion(0x5e);
+				break;
+			case JOG_MODE_Z_D:
+				lcd.setCursor(12,2);
+				lcd.write('Z');
+				lcd.write(0x5e);
+				lcd.setCursor(12,4);
+				lcd.writeInversion('Z');
+				lcd.writeInversion(0x00);
+				if(Language == CH)
+				{
+					lcd.setCursor(0,1);
+					lcd.writeFromPgmspaceCH(BACK_TO_MONITOR_MSG_CH);
+				}
+				else if (Language == EN)
+				{
+					lcd.setCursor(0,1);
+					lcd.writeFromPgmspace(BACK_TO_MONITOR_MSG);		
+				}
+				break;	
 		}
-		
-	if(distanceChanged)
-	{
-			switch (JogModeScreen){
-			default:
-				return;
-			case JOG_MODE_X:
-				lcd.setCursor(1, 5);
-				lcd.writeInt32(position[0] ,3);
-				break;
-			case JOG_MODE_Y:
-				lcd.setCursor(6, 5);
-				lcd.writeInt32(position[1] ,3);
-				break;
-			case JOG_MODE_Z:
-				lcd.setCursor(11, 5);
-				lcd.writeInt32(position[2] ,3);
-				break;
-			}
-		distanceChanged = false;
 	}	
 }
-
-void JogModeScreen::jog(ButtonArray::ButtonName direction) {
+void JogModeScreen::jog(ButtonArray::ButtonName direction)
+{
 	steppers::abort();
 	uint8_t dummy;
 	Point position = steppers::getStepperPosition(&dummy);
@@ -1207,79 +1268,133 @@ void JogModeScreen::jog(ButtonArray::ButtonName direction) {
 		steps = (INT32_MAX - 1) >> 1;
 		break;
 	}
-
-	if ( JogModeScreen == JOG_MODE_X ) {
+	
+	if (JogModeScreen == JOG_MODE_BACK){
 		switch(direction) {
 		case ButtonArray::CENTER:
-			JogModeScreen = JOG_MODE_Y;
-			modeChanged = true;
+			for (uint8_t i=0; i < 3; i++)
+				steppers::setAxisPotValue(i, digiPotOnEntry[i]);
+				steppers::enableAxes(0xff, false);
+				BOARD_STATUS_CLEAR(Motherboard::STATUS_MANUAL_MODE);
+				interface::popScreen();
 			break;
 		case ButtonArray::DOWN:
-			position[0] -= steps;
+			JogModeScreen = JOG_MODE_Z_D;
+			modeChanged = true;
 			break;
 		case ButtonArray::UP:
+			JogModeScreen = JOG_MODE_X_U;
+			modeChanged = true;
+			break;
+		default:
+			break;
+		}
+	}
+	else if ( JogModeScreen == JOG_MODE_X_U ) {
+		switch(direction) {
+		case ButtonArray::CENTER:
 			position[0] += steps;
 			break;
-		default:
-			break;
-		}
-	}
-	else if ( JogModeScreen == JOG_MODE_Y ) {
-		switch(direction) {
-		case ButtonArray::CENTER:
-			JogModeScreen = JOG_MODE_Z;
-			modeChanged = true;
-			break;
 		case ButtonArray::DOWN:
-			position[1] -= steps;
-			break;
-		case ButtonArray::UP:
-			position[1] += steps;
-			break;
-		default:
-			break;
-		}
-
-	}
-	else if (JogModeScreen == JOG_MODE_Z){
-		switch(direction) {
-		case ButtonArray::CENTER:
 			JogModeScreen = JOG_MODE_BACK;
 			modeChanged = true;
 			break;
-		case ButtonArray::DOWN:
-			position[2] += steps;
-			break;
 		case ButtonArray::UP:
-			position[2] -= steps;
-			break;
-		default:
-			break;
-		}
-	}
-	else if (JogModeScreen == JOG_MODE_BACK){
-		switch(direction) {
-		case ButtonArray::CENTER:
-			JogModeScreen = JOG_MODE_X;
+			JogModeScreen = JOG_MODE_X_D;
 			modeChanged = true;
 			break;
+		default:
+			break;
+		}
+	}
+	else if ( JogModeScreen == JOG_MODE_X_D ) {
+		switch(direction) {
+		case ButtonArray::CENTER:
+			position[0] -= steps;
+			break;
 		case ButtonArray::DOWN:
+			JogModeScreen = JOG_MODE_X_U;
+			modeChanged = true;
+			break;
 		case ButtonArray::UP:
-			for (uint8_t i=0; i < 3; i++)
-		    steppers::setAxisPotValue(i, digiPotOnEntry[i]);
-			steppers::enableAxes(0xff, false);
-			BOARD_STATUS_CLEAR(Motherboard::STATUS_MANUAL_MODE);
-			interface::popScreen();
+			JogModeScreen = JOG_MODE_Y_U;
+			modeChanged = true;
+			break;
+		default:
+			break;
+		}
+	}	
+	else if ( JogModeScreen == JOG_MODE_Y_U ) {
+		switch(direction) {
+		case ButtonArray::CENTER:
+			position[1] += steps;
+			break;
+		case ButtonArray::DOWN:
+			JogModeScreen = JOG_MODE_X_D;
+			modeChanged = true;
+			break;
+		case ButtonArray::UP:
+			JogModeScreen = JOG_MODE_Y_D;
+			modeChanged = true;
 			break;
 		default:
 			break;
 		}
 	}
-	
-	if ( direction == ButtonArray::UP || direction == ButtonArray::DOWN )
+	else if ( JogModeScreen == JOG_MODE_Y_D ) {
+		switch(direction) {
+		case ButtonArray::CENTER:
+			position[1] -= steps;
+			break;
+		case ButtonArray::DOWN:
+			JogModeScreen = JOG_MODE_Y_U;
+			modeChanged = true;
+			break;
+		case ButtonArray::UP:
+			JogModeScreen = JOG_MODE_Z_U;
+			modeChanged = true;
+			break;
+		default:
+			break;
+		}
+	}
+	else if (JogModeScreen == JOG_MODE_Z_U){
+		switch(direction) {
+		case ButtonArray::CENTER:
+			position[2] += steps;
+			break;
+		case ButtonArray::DOWN:
+			JogModeScreen = JOG_MODE_Y_D;
+			modeChanged = true;
+			break;
+		case ButtonArray::UP:
+			JogModeScreen = JOG_MODE_Z_D;
+			modeChanged = true;
+			break;
+		default:
+			break;
+		}
+	}
+	else if (JogModeScreen == JOG_MODE_Z_D){
+		switch(direction) {
+		case ButtonArray::CENTER:
+			position[2] -= steps;
+			break;
+		case ButtonArray::DOWN:
+			JogModeScreen = JOG_MODE_Z_U;
+			modeChanged = true;
+			break;
+		case ButtonArray::UP:
+			JogModeScreen = JOG_MODE_BACK;
+			modeChanged = true;
+			break;
+		default:
+			break;
+		}
+	}
+	if ( direction == ButtonArray::CENTER)
 	{
 		steppers::setTargetNew(position, interval, 0, 0);
-		distanceChanged = true;
 	}
 }
 
@@ -1293,19 +1408,17 @@ void JogModeScreen::notifyButtonPressed(ButtonArray::ButtonName button) {
 //		BOARD_STATUS_CLEAR(Motherboard::STATUS_MANUAL_MODE);
 //		interface::popScreen();
 //		break;
-		
-        case ButtonArray::DOWN:
-        case ButtonArray::UP:
-		jogging = true;
-		// fallthrough
         case ButtonArray::CENTER:
+		jogging = true;	
+        case ButtonArray::UP:
+		case ButtonArray::DOWN:
 		jog(button);
 		break;
         default:
                 break;
 	}
 }
-*/
+
 /*
 void FilamentOdometerScreen::reset() {
 	needsRedraw = false;
@@ -1400,6 +1513,22 @@ void FilamentOdometerScreen::notifyButtonPressed(ButtonArray::ButtonName button)
 	}
 }
 */
+
+static void digits2(char *buf, uint8_t val)
+{
+	uint8_t v;
+
+	buf[0] = ' ';
+	if ( val >= 10)
+	{
+		v = val / 10;
+		buf[0] = v + '0';
+		val -= v * 10;
+	}
+	buf[1] = val + '0';
+	buf[2] = '\0';
+}
+
 void MonitorModeScreen::reset() {
 	printPercentage = 0;
 	singleTool = eeprom::isSingleTool();
@@ -1438,6 +1567,8 @@ void MonitorModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 		lcd.writeLine(32);
 		lcd.setAddress(0, 67);
 		lcd.writeLine(32);
+		
+//		key = true;
 /*			
 		uint8_t row;
 		if ( hasHBP ) {
@@ -1475,6 +1606,7 @@ void MonitorModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 		if ( currentDelta == 0 ) {
 			heating = false;
 			lcd.moveWriteFromPgmspace(0, 1, BUILD_PERCENT_MSG);
+			lcd.moveWriteFromPgmspace(0, 6, CLEAR_MSG);
 			key = true;
 		}
 		else {
@@ -1511,7 +1643,7 @@ void MonitorModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 						}
 						progressBar(lcd, 100-printPercentage, 100, true);
 					
-						uint8_t left_time;
+//						uint8_t left_time;
 						uint8_t build_hours;
 						uint8_t build_minutes;
 						host::getPrintTime(build_hours, build_minutes);
@@ -1557,7 +1689,25 @@ void MonitorModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 							else if(Language == EN)
 								lcd.moveWriteFromPgmspace(0, 6, ESTIMATE_TIME_MSG);	
 						}
-*/						
+*/		
+						char buf[17];
+						 int32_t tsecs;
+
+						 if ( 0 < (tsecs = command::estimatedTimeLeftInSeconds()))
+						  {
+							 lcd.moveWriteFromPgmspace(0, 6, BUILD_LEFT1_MSG);
+	//						 lcd.setCursor(13, row);
+
+							 if ( tsecs < 60 ) {
+							  digits2(buf, (uint8_t)tsecs);
+							  lcd.writeString(buf);
+							  lcd.writeFromPgmspace(BUILD_LEFT2_MSG);
+							 }
+							 else {
+							  formatTime(buf, (uint32_t)tsecs);
+							  lcd.writeString(buf);
+							 }
+						 }
 		}
 	}
 	
@@ -1644,6 +1794,34 @@ void Menu::resetState() {
 void Menu::handleSelect(uint8_t index) {
 }
 
+//循环菜单
+void Menu::notifyButtonPressed(ButtonArray::ButtonName button) {
+	switch (button) {
+	case ButtonArray::CENTER:
+		handleSelect(itemIndex);
+		break;
+	case ButtonArray::LEFT:
+		interface::popScreen();
+		break;
+	case ButtonArray::UP:
+		// decrement index
+		if ( itemIndex > firstItemIndex )
+			itemIndex--;
+		//Wrap around to bottom of menu
+		else
+			itemIndex = itemCount - 1;
+		break;
+	case ButtonArray::DOWN:
+		// increment index
+		if ( ++itemIndex >= itemCount )
+			itemIndex = firstItemIndex;
+		break;
+	default:
+		break;
+	}
+}
+
+/*
 void Menu::notifyButtonPressed(ButtonArray::ButtonName button) {
 	switch (button) {
 	case ButtonArray::CENTER:
@@ -1672,7 +1850,7 @@ void Menu::notifyButtonPressed(ButtonArray::ButtonName button) {
 		break;
 	}
 }
-
+*/
 /*
 void CounterMenu::reset() {
 	selectMode = false;
@@ -2538,7 +2716,7 @@ void HomeOffsetsModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 				if(Language == CH)
 					lcd.setAddress(10,28);
 				else if(Language == EN)
-					lcd.setAddress(8,28);	
+					lcd.setAddress(6,28);	
 				break;
 				
 			case HOS_OFFSET_Y:
@@ -2550,7 +2728,7 @@ void HomeOffsetsModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 				if(Language == CH)
 					lcd.setAddress(10,48);
 				else if(Language == EN)
-					lcd.setAddress(8,48);
+					lcd.setAddress(6,48);
 			break;
 			
 			case HOS_OFFSET_Z:
@@ -2562,7 +2740,7 @@ void HomeOffsetsModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 				if(Language == CH)
 					lcd.setAddress(10,68);
 				else if(Language == EN)
-					lcd.setAddress(8,68);
+					lcd.setAddress(6,68);
 			break;
 		default:
 			break;	
@@ -3828,7 +4006,7 @@ void BotStatsScreen::notifyButtonPressed(ButtonArray::ButtonName button) {
 }
 */
 SettingsMenu::SettingsMenu() :
-	Menu(_BV((uint8_t)ButtonArray::UP) | _BV((uint8_t)ButtonArray::DOWN), (uint8_t)7) {
+	Menu(_BV((uint8_t)ButtonArray::UP) | _BV((uint8_t)ButtonArray::DOWN), (uint8_t)9) {
 	reset();
 }
 
@@ -3866,24 +4044,32 @@ void SettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 			lcd.moveWriteFromPgmspaceCH(1, row, msg);
 			break;
 		case 2:
+			msg = HOME_AXES_MSG_CH;
+			lcd.moveWriteFromPgmspaceCH(1, row, msg);
+			break;
+		case 3:
+			msg = JOG_MSG_CH;
+			lcd.moveWriteFromPgmspaceCH(1, row, msg);
+			break;			
+		case 4:
 			msg = PAUSE_HEAT_MSG_CH;
 			lcd.moveWriteFromPgmspace(13, row, pauseHeatOn ? ON_MSG : OFF_MSG);
 			lcd.moveWriteFromPgmspaceCH(1, row, msg);
 			break;
-		case 3:
+		case 5:
 			msg = SOUND_MSG_CH;
 			lcd.moveWriteFromPgmspace(13, row, soundOn ? ON_MSG : OFF_MSG);
 			lcd.moveWriteFromPgmspaceCH(1, row, msg);
 			break;
-		case 4:
+		case 6:
 			msg = RESET_MSG_CH;
 			lcd.moveWriteFromPgmspaceCH(1, row, msg);
 			break;
-		case 5:
+		case 7:
 			msg = LANGUAGE_MSG_CH;
 			lcd.moveWriteFromPgmspaceCH(1, row, msg);
 			break;	
-		case 6:
+		case 8:
 			msg = EXIT_MSG_CH;
 			lcd.moveWriteFromPgmspaceCH(1, row, msg);
 			break;
@@ -3909,24 +4095,32 @@ void SettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 			lcd.moveWriteFromPgmspace(1, row, msg);
 			break;
 		case 2:
+			msg = HOME_AXES_MSG;
+			lcd.moveWriteFromPgmspace(1, row, msg);
+			break;
+		case 3:
+			msg = JOG_MSG;
+			lcd.moveWriteFromPgmspace(1, row, msg);
+			break;				
+		case 4:
 			msg = PAUSE_HEAT_MSG;
 			lcd.moveWriteFromPgmspace(13, row, pauseHeatOn ? ON_MSG : OFF_MSG);
 			lcd.moveWriteFromPgmspace(1, row, msg);
 			break;
-		case 3:
+		case 5:
 			msg = SOUND_MSG;
 			lcd.moveWriteFromPgmspace(13, row, soundOn ? ON_MSG : OFF_MSG);
 			lcd.moveWriteFromPgmspace(1, row, msg);
 			break;
-		case 4:
+		case 6:
 			msg = RESET_MSG;
 			lcd.moveWriteFromPgmspace(1, row, msg);
 			break;
-		case 5:
+		case 7:
 			msg = LANGUAGE_MSG;
 			lcd.moveWriteFromPgmspace(1, row, msg);
 			break;	
-		case 6:
+		case 8:
 			msg = EXIT_MSG;
 			lcd.moveWriteFromPgmspace(1, row, msg);
 			break;
@@ -3945,14 +4139,20 @@ void SettingsMenu::handleSelect(uint8_t index) {
 	case 1:
 		// Home Offsets
 		interface::pushScreen(&homeOffsetsModeScreen);
-		return;
+		return;		
 	case 2:
+		host::startOnboardBuild(utility::HOME_AXES);
+		return;
+	case 3:
+		interface::pushScreen(&jogModeScreen);
+		return;		
+	case 4:
 		pauseHeatOn = !pauseHeatOn;
 		eeprom_write_byte((uint8_t*)eeprom_offsets::HEAT_DURING_PAUSE,
 				  pauseHeatOn ? 1 : 0);
 		lineUpdate = true;
 		return;
-	case 3:
+	case 5:
 		// update sound preferences
 		soundOn = !soundOn;
 		eeprom_write_byte((uint8_t*)eeprom_offsets::BUZZ_SETTINGS,
@@ -3960,13 +4160,13 @@ void SettingsMenu::handleSelect(uint8_t index) {
 		Piezo::reset();
 		lineUpdate = true;
 		return;
-	case 4:
+	case 6:
 		interface::pushScreen(&resetSettingsMenu);
 		return;
-	case 5:
+	case 7:
 		interface::pushScreen(&languageMenu);
 		return;
-	case 6:
+	case 8:
 		interface::popScreen();
 		return;
 	}

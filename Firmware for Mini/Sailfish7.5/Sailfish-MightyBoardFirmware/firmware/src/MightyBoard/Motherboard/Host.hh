@@ -116,10 +116,12 @@ void stopPrintTime();
 /// return true if the build has completed (either from USB or SD card)
 bool isBuildComplete();
 
+#endif
+
 /// return total print time in units of seconds
 float getPrintSeconds();
 
-#endif
+
 
 }
 

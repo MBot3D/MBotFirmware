@@ -97,11 +97,11 @@ uint8_t pausedDigiPots[STEPPER_COUNT] = {0, 0, 0, 0, 0};
 bool pausedFanState;
 
 uint8_t buildPercentage = 101;
-#ifdef MODEL_REPLICATOR2
+//#ifdef MODEL_REPLICATOR2
 float startingBuildTimeSeconds;
 uint8_t startingBuildTimePercentage;
 float elapsedSecondsSinceBuildStart;
-#endif
+//#endif
 
 #ifdef DITTO_PRINT
 bool dittoPrinting = false;
@@ -314,11 +314,11 @@ void reset() {
 	else	dittoPrinting = false;
 #endif
 
-#ifdef MODEL_REPLICATOR2
+//#ifdef MODEL_REPLICATOR2
 	startingBuildTimeSeconds = 0.0;
 	startingBuildTimePercentage = 0;
 	elapsedSecondsSinceBuildStart = 0.0;
-#endif
+//#endif
 
 #ifdef PSTOP_SUPPORT
 	pstop_triggered = false;
@@ -1533,7 +1533,7 @@ void runCommandSlice() {
 					buildPercentage = pop8();
 					pop8();	// uint8_t ignore; // remove the reserved byte
 					line_number++;
-#ifdef MODEL_REPLICATOR2
+//#ifdef MODEL_REPLICATOR2
 					//Set the starting time / percent on the first HOST_CMD_SET_BUILD_PERCENT
 					//with a non zero value sent near the start of the build
 					//We use this to calculate the build time
@@ -1544,7 +1544,7 @@ void runCommandSlice() {
 					if ( buildPercentage > 0 ) {
 						elapsedSecondsSinceBuildStart = host::getPrintSeconds();
 					}
-#endif
+//#endif
 				}
 			} else if (command == HOST_CMD_QUEUE_SONG ) //queue a song for playing
  			{
@@ -1641,7 +1641,6 @@ void runCommandSlice() {
 	}
 }
 
-#ifdef MODEL_REPLICATOR2
 
 //Returns the estimated time left for the build in seconds
 //If we can't complete the calculation due to a lack of information, then we return 0
@@ -1663,7 +1662,5 @@ int32_t estimatedTimeLeftInSeconds(void) {
 
 	return (int32_t)timeLeft;
 }
-
-#endif
 
 }

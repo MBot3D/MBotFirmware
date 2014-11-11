@@ -840,13 +840,13 @@ void getPrintTime(uint8_t& hours, uint8_t& minutes) {
     return;
 }
 
-#ifdef MODEL_REPLICATOR2
+//#ifdef MODEL_REPLICATOR2
 
 float getPrintSeconds(void){
 	return (float)((int32_t)print_time_hours * (int32_t)3600) + (float)print_time.getCurrentElapsed() / 1000000.0f;
 }
 
-#endif
+//#endif
 
     // legacy tool / motherboard breakout of query commands
 bool processExtruderQueryPacket(const InPacket& from_host, OutPacket& to_host) {

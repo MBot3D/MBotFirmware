@@ -20,9 +20,9 @@ const static PROGMEM prog_uchar CLEAR_MSG[]     =  "                ";
 #include "Menu.FR.hh"
 #else // Use US ENGLISH as default
 
-#define LEVEL_PLATE const static uint8_t LevelPlate[] PROGMEM = { 137,  16,  153,  0,  0,  0,  0,  82,  101,  112,  71,  32,  66,  117,  105,  108,  100,  0,  150,  0,  255,  132,  3,  105,  1,  0,  0,  20,  0,  131,  4,  136,  0,  0,  0,  20,  0,  140,  0,  0,  0,  0,  0,  0,  0,  0,  48,  248,  255,  255,  0,  0,  0,  0,  0,  0,  0,  0,  155,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  165,  28,  0,  0,  24,  0,  0,  160,  64,  149,  4,  131,  4,  220,  5,  0,  0,  20,  0,  144,  31,  139,  0,  0,  0,  0,  0,  0,  0,  0,  160,  15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  128,  0,  0,  0,  155,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  165,  28,  0,  0,  24,  0,  0,  32,  65,  149,  4,  137,  27,  149,  6,  0,  0,  0,  80,  114,  101,  115,  115,  32,  34,  77,  34,  32,  119,  104,  101,  110,  32,  108,  101,  118,  101,  108,  0,  137,  31,  137,  31 };
+#define LEVEL_PLATE const static uint8_t LevelPlate[] PROGMEM = {137,  8,  153,  0,  0,  0,  0,  82,  101,  112,  71,  32,  66,  117,  105,  108,  100,  0,  150,  0,  255,  132,  3,  105,  1,  0,  0,  20,  0,  140,  148,  27,  0,  0,  148,  27,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  155,  148,  27,  0,  0,  83,  252,  255,  255,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  66,  12,  0,  0,  24,  0,  0,  170,  66,  85,  8,  131,  4,  44,  1,  0,  0,  20,  0,  140,  0,  0,  0,  0,  0,  0,  0,  0,  48,  248,  255,  255,  0,  0,  0,  0,  0,  0,  0,  0,  155,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  13,  0,  0,  24,  0,  0,  160,  64,  21,  2,  131,  4,  44,  1,  0,  0,  20,  0,  137,  31};
 
-#define LEVEL_PLATE_LEN 189
+#define LEVEL_PLATE_LEN 153
 
 
 #ifdef MODEL_REPLICATOR
@@ -106,8 +106,8 @@ const static PROGMEM prog_uchar EXTRUDER1_TEMP_MSG[] =   "RExtrude---/---C";
 const static PROGMEM prog_uchar EXTRUDER2_TEMP_MSG[] =   "LExtrude---/---C";
 const static PROGMEM prog_uchar PLATFORM_TEMP_MSG[]  =   "Platform---/---C";
 const static PROGMEM prog_uchar EXTRUDER_TEMP_MSG[]  =   "  TARGET ---    ";
-const static PROGMEM prog_uchar BUILD_LEFT1_MSG[]  =  "about ";
-const static PROGMEM prog_uchar BUILD_LEFT2_MSG[]  =  " left";
+const static PROGMEM prog_uchar BUILD_LEFT1_MSG[]  =  "Time Left";
+const static PROGMEM prog_uchar BUILD_LEFT2_MSG[]  =  " secs";
 const static PROGMEM prog_uchar BUILD_LEFT_MSG_CH[]  =  {0x32,0x33,0x08,0x34,0x00};
 const static PROGMEM prog_uchar ESTIMATE_TIME_MSG[]  =  "calculating...";
 const static PROGMEM prog_uchar ESTIMATE_TIME_MSG_CH[]  =  {0x2e,0x2f,0x30,0x31,0x32,0x33,0x08,0x34,0x00};
@@ -158,8 +158,10 @@ const static PROGMEM prog_uchar ABOUT_MSG_CH[] =   {0x1b,0x1c,0x00};
 const static PROGMEM prog_uchar UTILITIES_MSG[] =        "Utilities";
 const static PROGMEM prog_uchar MONITOR_MSG[] =          "Monitor Mode";
 const static PROGMEM prog_uchar JOG_MSG[]   =            "Jog Mode";
+const static PROGMEM prog_uchar JOG_MSG_CH[]   =           {0x42,0x43,0x44,0x45,0x00};
 const static PROGMEM prog_uchar CALIBRATION_MSG[] =      "Calibrate Axes";
 const static PROGMEM prog_uchar HOME_AXES_MSG[] =        "Home Axes";
+const static PROGMEM prog_uchar HOME_AXES_MSG_CH[] =        {0x12,0x41,0x00};
 const static PROGMEM prog_uchar FILAMENT_OPTIONS_MSG[] = "Filament Load";
 
 

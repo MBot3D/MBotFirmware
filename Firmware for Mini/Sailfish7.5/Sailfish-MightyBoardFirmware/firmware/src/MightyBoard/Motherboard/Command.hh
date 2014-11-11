@@ -159,13 +159,13 @@ void clearLineNumber();
 /// if we update the line_counter  to allow overflow, we'll need to update the BuildStats Screen implementation
 const static uint32_t MAX_LINE_COUNT = 1000000000;
 
-#ifdef MODEL_REPLICATOR2
+//#ifdef MODEL_REPLICATOR2
 
 int32_t estimatedTimeLeftInSeconds();
 
 float filamentUsed();
 
-#endif
+//#endif
 
 }
 
