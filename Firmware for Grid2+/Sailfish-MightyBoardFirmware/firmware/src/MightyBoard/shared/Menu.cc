@@ -1468,7 +1468,7 @@ void printFilamentUsed(float filamentUsed, LiquidCrystalSerial& lcd) {
 	else                             precision = 2;
 	
 	lcd.setCursor(1, 4);
-	lcd.writeFloat(filamentUsed, precision, LCD_SCREEN_WIDTH - ((precision == 1) ? 2 : 1));
+	lcd.writeFloat(filamentUsed, precision, 0);
 	lcd.writeFromPgmspace((precision == 1) ? MILLIMETERS_MSG : METERS_MSG);
 }
 /*
