@@ -1,0 +1,12 @@
+#added by jmil on 2010-04-20
+
+.sconsign.dblite
+build
+documentation
+*.o
+*.map
+*.svn
+firmware/build.sh
+firmware/checksize.sh
+firmware/svnversion.awk
+NOTES.TXT
