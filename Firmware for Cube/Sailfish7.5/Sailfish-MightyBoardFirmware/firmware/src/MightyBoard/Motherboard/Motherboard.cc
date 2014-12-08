@@ -271,11 +271,11 @@ void Motherboard::init() {
 	DEBUG_PIN1.setDirection(true);
 	DEBUG_PIN2.setDirection(true);
 	DEBUG_PIN3.setDirection(true);
-	DEBUG_PIN4.setDirection(true);
-	DEBUG_PIN5.setDirection(true);
-	DEBUG_PIN6.setDirection(true);
+//	DEBUG_PIN4.setDirection(true);
+//	DEBUG_PIN5.setDirection(true);
+//	DEBUG_PIN6.setDirection(true);
 #ifdef MODEL_REPLICATOR
-	DEBUG_PIN7.setDirection(true);
+//	DEBUG_PIN7.setDirection(true);
 #endif
 }
 

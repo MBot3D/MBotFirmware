@@ -153,11 +153,11 @@
 #define DEBUG_PIN1	Pin(PortC,1)
 #define DEBUG_PIN2	Pin(PortC,0)
 #define DEBUG_PIN3	Pin(PortG,1)
-#define DEBUG_PIN4  Pin(PortB,7)
-#define DEBUG_PIN5  Pin(PortG,0)
-#define DEBUG_PIN6  Pin(PortK,6)
-#define DEBUG_PIN7  Pin(PortK,5)
-#define DEBUG_PIN8  Pin(PortK,4)
+//#define DEBUG_PIN4  Pin(PortB,7)
+//#define DEBUG_PIN5  Pin(PortG,0)
+//#define DEBUG_PIN6  Pin(PortK,6)
+//#define DEBUG_PIN7  Pin(PortK,5)
+//#define DEBUG_PIN8  Pin(PortK,4)
 
 // By default, debugging packets should be honored; this is made
 // configurable if we're short on cycles or EEPROM.
