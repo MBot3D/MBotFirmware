@@ -50,17 +50,17 @@ namespace replicator_axis_offsets{
 	const static uint32_t DUAL_Y_OFFSET_STEPS   =  10826L;
 	const static uint32_t SINGLE_Y_OFFSET_STEPS =  10826L;
 #else
-	const static uint32_t DUAL_X_OFFSET_STEPS   = 9743L;
-        const static uint32_t SINGLE_X_OFFSET_STEPS = 11514L;
-	const static uint32_t DUAL_Y_OFFSET_STEPS   =  10185;
-	const static uint32_t SINGLE_Y_OFFSET_STEPS =  10185;
+	const static uint32_t DUAL_X_OFFSET_STEPS   = 12400L;
+        const static uint32_t SINGLE_X_OFFSET_STEPS = 12400L;
+	const static uint32_t DUAL_Y_OFFSET_STEPS   =  9743L;
+	const static uint32_t SINGLE_Y_OFFSET_STEPS =  9743L;
 #endif
 	/// Footnote:
 	/// mm offsets
-	/// XDUAL: 110mm,
-	/// XSINGLE: 130mm,
+	/// XDUAL: 140mm,
+	/// XSINGLE: 140mm,
 	/// Y: 115mm
-	/// YSINGLE: 115mm
+	/// YSINGLE: 110mm
 
 	/// steps per mm (from replicator.xml in RepG/machines)
 	/// XY : 88.573186
@@ -74,7 +74,7 @@ namespace replicator_axis_lengths{
 	// Each one is the length(in mm's) * steps_per_mm  (from the xml file and the result is rounded down)
 #ifdef MODEL_REPLICATOR
     // Replicator 1
-    const static uint32_t axis_lengths[5] = {250L, 220L, 185L, 100000L, 100000L};
+    const static uint32_t axis_lengths[5] = {280L, 220L, 220L, 100000L, 100000L};
 #else
 #ifdef SINGLE_EXTRUDER
     // Replicator 2
