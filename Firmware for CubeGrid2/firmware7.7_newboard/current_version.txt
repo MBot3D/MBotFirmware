@@ -1,0 +1,30 @@
+7.07.0.1.0
+ * Assorted bug fixes; Jetty/Dan eigth release
+7.06.0.1.0
+ * Assorted bug fixes; Jetty/Dan seventh release
+7.05.0.1.0
+ * Jetty/Dan sixth Sailfish release
+7.04.0.1.0
+ * Jetty/Dan fifth Sailfish release
+7.03.0.1.0
+ * Jetty/Dan fourth Sailfish release
+7.01.0.1.0
+ * Jetty/Dan third Sailfish release; version changed to 7.1;
+7.00.00
+ * Jetty/Dan second Sailfish release; version changed to 7  to keep in sync with M
+6.02.00
+ * Dan/Jetty Sailfish release
+5.06.01
+ * Dan/Jetty MBI Collaboration, working version
+5.05.04
+ * internal release July 18, 2012 debug stalls using atomic blocks on move commands
+5.05.01
+ * internal release July 12, 2012
+5.05
+ * release for acceleration
+5.04
+ * fixes for acceleration
+5.03
+ * bug fix release / acceleration beta
+5.02
+ * added Tolerance offset for nozzles

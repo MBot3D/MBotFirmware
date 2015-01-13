@@ -1,0 +1,6 @@
+from src.platforms import *
+
+platform = ARGUMENTS.get('platform', '')
+
+if platform in platforms:
+	SConscript(['src/SConscript.mightyboard'], variant_dir='build/'+platform)
