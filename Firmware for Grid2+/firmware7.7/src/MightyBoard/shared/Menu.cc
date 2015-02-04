@@ -2115,10 +2115,10 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		if ( index == lind ) {
 			lcd.writeFromPgmspaceCH(singleTool ? EXTRUDER_SPACES_MSG_CH :
 					      RIGHT_SPACES_MSG_CH);
-			if ( selected ) {
-				lcd.setCursor(12, row);
-				lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-			}
+
+			lcd.setCursor(12, row);
+			lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
+
 			lcd.setCursor(13, row);
 			lcd.writeInt(counterRight, 3);
 			return;
@@ -2128,10 +2128,8 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		if ( !singleTool ) {
 			if ( index == lind ) {
 				lcd.writeFromPgmspaceCH(LEFT_SPACES_MSG_CH);
-				if ( selected ) {
-					lcd.setCursor(12, row);
-					lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-				}
+				lcd.setCursor(12, row);
+				lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
 				lcd.setCursor(13, row);
 				lcd.writeInt(counterLeft, 3);
 				return;
@@ -2140,10 +2138,8 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		}else if ( hasHBP ) {
 			if ( index == lind ) {
 				lcd.writeFromPgmspaceCH(PLATFORM_SPACES_MSG_CH);
-				if ( selected ) {
-					lcd.setCursor(12, row);
-					lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-				}
+				lcd.setCursor(12, row);
+				lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
 				lcd.setCursor(13, row);
 				lcd.writeInt(counterPlatform, 3);
 				return;
@@ -2154,10 +2150,8 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		if ( !singleTool && hasHBP ) {
 			if ( index == lind ) {
 				lcd.writeFromPgmspaceCH(PLATFORM_SPACES_MSG_CH);
-				if ( selected ) {
-					lcd.setCursor(12, row);
-					lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-				}
+				lcd.setCursor(12, row);
+				lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
 				lcd.setCursor(13, row);
 				lcd.writeInt(counterPlatform, 3);
 				return;
@@ -2182,10 +2176,8 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		if ( index == lind ) {
 			lcd.writeFromPgmspace(singleTool ? EXTRUDER_SPACES_MSG :
 					      RIGHT_SPACES_MSG);
-			if ( selected ) {
-				lcd.setCursor(12, row);
-				lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-			}
+			lcd.setCursor(12, row);
+			lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
 			lcd.setCursor(13, row);
 			lcd.writeInt(counterRight, 3);
 			return;
@@ -2195,10 +2187,8 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		if ( !singleTool ) {
 			if ( index == lind ) {
 				lcd.writeFromPgmspace(LEFT_SPACES_MSG);
-				if ( selected ) {
-					lcd.setCursor(12, row);
-					lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-				}
+				lcd.setCursor(12, row);
+				lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
 				lcd.setCursor(13, row);
 				lcd.writeInt(counterLeft, 3);
 				return;
@@ -2207,10 +2197,8 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		}else if ( hasHBP ) {
 			if ( index == lind ) {
 				lcd.writeFromPgmspace(PLATFORM_SPACES_MSG);
-				if ( selected ) {
-					lcd.setCursor(12, row);
-					lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-				}
+				lcd.setCursor(12, row);
+				lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
 				lcd.setCursor(13, row);
 				lcd.writeInt(counterPlatform, 3);
 				return;
@@ -2221,10 +2209,8 @@ void PreheatSettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 		if ( !singleTool && hasHBP ) {
 			if ( index == lind ) {
 				lcd.writeFromPgmspace(PLATFORM_SPACES_MSG);
-				if ( selected ) {
-					lcd.setCursor(12, row);
-					lcd.write(LCD_CUSTOM_CHAR_RIGHT);
-				}
+				lcd.setCursor(12, row);
+				lcd.write(selected ? LCD_CUSTOM_CHAR_RIGHT : ' ');
 				lcd.setCursor(13, row);
 				lcd.writeInt(counterPlatform, 3);
 				return;

@@ -27,7 +27,7 @@
 #elif MODEL_REPLICATOR
 
 #define THE_REPLICATOR_STR "MBot 3D Printer"
-#define MACHINE_ID 0xD314 // Replicator 1
+#define MACHINE_ID 0xD414 // Replicator 1
 
 #elif MODEL_REPLICATOR2
 #if defined(SINGLE_EXTRUDER)
