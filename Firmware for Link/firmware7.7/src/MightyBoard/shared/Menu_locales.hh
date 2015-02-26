@@ -376,7 +376,7 @@ const static PROGMEM prog_uchar HOME_AXES_MSG_CH[] =        {0x12,0x41,0x00};
 const static PROGMEM prog_uchar FILAMENT_OPTIONS_MSG[] = "Filament Load";
 
 
-const static PROGMEM prog_uchar MODLE_MSG[] = 	 "Modle";
+const static PROGMEM prog_uchar MODLE_MSG[] = 	 "Model";
 const static PROGMEM prog_uchar MODLE_MSG1[] = 	 ":Link";
 const static PROGMEM prog_uchar MODLE_MSG_CH[] = 	 {0x3f,0x40,0x00};
 const static PROGMEM prog_uchar VERSION_MSG[] = 	 "Version";
