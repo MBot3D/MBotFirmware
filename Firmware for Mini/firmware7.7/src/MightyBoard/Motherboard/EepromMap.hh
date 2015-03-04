@@ -65,7 +65,7 @@ namespace replicator_axis_offsets{
     const static uint32_t DUAL_X_OFFSET_STEPS   = 4872L;
     const static uint32_t SINGLE_X_OFFSET_STEPS = 6200L;
     const static uint32_t DUAL_Y_OFFSET_STEPS   =  4872L;
-    const static uint32_t SINGLE_Y_OFFSET_STEPS =  (uint32_t)(-6200L);
+    const static uint32_t SINGLE_Y_OFFSET_STEPS =  (uint32_t)(-7086L);
 #endif
 	/// Footnote:
 	/// mm offsets

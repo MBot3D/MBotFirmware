@@ -23,7 +23,7 @@
 #include "EepromMap.hh"
 #include "Menu_locales.hh"
 
-const static uint16_t Lengths[6]  PROGMEM = { 126, /// Home Axes
+const static uint16_t Lengths[6]  PROGMEM = { 106, /// Home Axes
 					      LEVEL_PLATE_LEN_SINGLE,
 					      LEVEL_PLATE_LEN_DUAL,
 					      LEVEL_PLATE_LEN_SINGLE_CH,

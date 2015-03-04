@@ -1723,7 +1723,9 @@ void MonitorModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 		lcd.writeLine(32);
 
 		lcd.moveWriteFromPgmspace(singleTool ? 4 : 1, 6,singleTool ? EXTRUDER_TEMP_MSG : EXTRUDER2_TEMP_MSG);
-		lcd.moveWriteFromPgmspace(0, 4, ALEVEL_INACTIVE_MSG);
+#if defined(AUTO_LEVEL)
+//		lcd.moveWriteFromPgmspace(0, 4, ALEVEL_INACTIVE_MSG);
+#endif
 	}
 
 	OutPacket responsePacket;
@@ -1827,16 +1829,16 @@ void MonitorModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 	}
 	case 5:
 #if defined(AUTO_LEVEL)
-		if ( ++flip_flop <= 2 ){
-			int32_t status;
-			if ( skew_active && 0 <= ( status = skew_status() ) ) {
-				lcd.moveWriteFromPgmspace(12, 4, ON_MSG);
-			}
-			else
-				lcd.moveWriteFromPgmspace(12, 4, OFF_MSG);
-			break;
-		}
-		if ( flip_flop >= 4 ) flip_flop = 0;
+//		if ( ++flip_flop <= 2 ){
+//			int32_t status;
+//			if ( skew_active && 0 <= ( status = skew_status() ) ) {
+//				lcd.moveWriteFromPgmspace(12, 4, ON_MSG);
+//			}
+//			else
+//				lcd.moveWriteFromPgmspace(12, 4, OFF_MSG);
+//			break;
+//		}
+//		if ( flip_flop >= 4 ) flip_flop = 0;
 #endif
 		break;
 	case 6:	
@@ -4039,7 +4041,7 @@ void MainMenu::update(LiquidCrystalSerial& lcd, bool forceRedraw)
 		}
 		else if(Language == EN)
 		{
-			lcd.setAddress(6,48);
+			lcd.setAddress(3,48);
 			lcd.writeFromPgmspace(BUILD_MSG);
 
 			lcd.setAddress(16,48);
@@ -4053,7 +4055,7 @@ void MainMenu::update(LiquidCrystalSerial& lcd, bool forceRedraw)
 
 			switch(itemIndex){
 			case 0:
-				lcd.setAddress(6,48);
+				lcd.setAddress(3,48);
 				lcd.writeFromPgmspace_R(BUILD_MSG);
 				break;
 			case 1:
@@ -4119,7 +4121,7 @@ void MainMenu::update(LiquidCrystalSerial& lcd, bool forceRedraw)
 			// Only need to clear the previous cursor
 			switch(lastDrawIndex){
 			case 0:
-				lcd.setAddress(6,48);
+				lcd.setAddress(3,48);
 				lcd.writeFromPgmspace(BUILD_MSG);
 				break;
 			case 1:
@@ -4138,7 +4140,7 @@ void MainMenu::update(LiquidCrystalSerial& lcd, bool forceRedraw)
 			
 			switch(itemIndex){
 			case 0:
-				lcd.setAddress(6,48);
+				lcd.setAddress(3,48);
 				lcd.writeFromPgmspace_R(BUILD_MSG);
 
 				break;
@@ -4464,7 +4466,7 @@ void BotStatsScreen::notifyButtonPressed(ButtonArray::ButtonName button) {
 }
 */
 SettingsMenu::SettingsMenu() :
-	Menu(_BV((uint8_t)ButtonArray::UP) | _BV((uint8_t)ButtonArray::DOWN), (uint8_t)12) {
+	Menu(_BV((uint8_t)ButtonArray::UP) | _BV((uint8_t)ButtonArray::DOWN), (uint8_t)11) {
 	reset();
 }
 
@@ -4521,10 +4523,10 @@ void SettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 			lcd.moveWriteFromPgmspaceCH(1, row, PREHEAT_SET_MSG_CH);
 		}
 		lind++;
-		if ( index == lind ) {
-			lcd.moveWriteFromPgmspaceCH(1, row, ALEVEL_UTILITY_MSG_CH);
-		}
-		lind++;
+//		if ( index == lind ) {
+//			lcd.moveWriteFromPgmspaceCH(1, row, ALEVEL_UTILITY_MSG_CH);
+//		}
+//		lind++;
 		if ( index == lind ) {
 			lcd.moveWriteFromPgmspaceCH(1, row, RESET_MSG_CH);
 		}
@@ -4576,10 +4578,10 @@ void SettingsMenu::drawItem(uint8_t index, LiquidCrystalSerial& lcd) {
 			lcd.moveWriteFromPgmspace(1, row, PREHEAT_SET_MSG);
 		}
 		lind++;
-		if ( index == lind ) {
-			lcd.moveWriteFromPgmspace(1, row, ALEVEL_UTILITY_MSG);
-		}
-		lind++;
+//		if ( index == lind ) {
+//			lcd.moveWriteFromPgmspace(1, row, ALEVEL_UTILITY_MSG);
+//		}
+//		lind++;
 		if ( index == lind ) {
 			lcd.moveWriteFromPgmspace(1, row, RESET_MSG);
 		}
@@ -4646,11 +4648,11 @@ void SettingsMenu::handleSelect(uint8_t index) {
 		return;
 	}
 	lind++;
-	if ( index == lind ) {
-		interface::pushScreen(&alevelZDiffScreen);
-		return;
-	}
-	lind++;
+//	if ( index == lind ) {
+//		interface::pushScreen(&alevelZDiffScreen);
+//		return;
+//	}
+//	lind++;
 	if ( index == lind ) {
 		interface::pushScreen(&resetSettingsMenu);
 		return;
